@@ -1,0 +1,34 @@
+{
+  "name" : "landofcoder/module-magento2-special-price-datetime",
+  "description" : "Magento 2 module special price support date time",
+  "type" : "magento2-module",
+  "version" : "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "require": {
+  },
+  "authors": [
+    {
+      "name": "Landofcoder",
+      "email": "info@landofcoder.com",
+      "homepage": "https://landofcoder.com",
+      "role": "Magento 2 Extension Provider"
+    }
+  ],
+  "support": {
+    "email": "info@landofcoder.com"
+  },
+  "keywords": [
+    "landofcoder",
+    "landofcoder special price date time",
+    "special price date and time for magento 2"
+  ],
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "Lof\\SpecialPriceDateTime\\": ""
+    }
+  }
+}
