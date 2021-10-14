@@ -21,52 +21,58 @@
 
 namespace Lof\SpecialPriceDateTime\Setup;
 
-use Magento\Framework\Setup\InstallDataInterface;
+use Magento\Framework\Setup\UninstallInterface;
+use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Setup\EavSetupFactory;
 
-class InstallData implements InstallDataInterface
+/**
+ * Class Uninstall
+ * @package Lof\SpecialPriceDateTime\Setup
+ */
+class Uninstall implements UninstallInterface
 {
     /**
-     * @var EavSetupFactory
+     * Eav setup factory
+     * @var \Magento\Eav\Setup\EavSetupFactory
      */
-    protected $eavSetupFactory;
+    private $eavSetupFactory;
 
     /**
      * Init
      * @param EavSetupFactory $eavSetupFactory
      */
-    public function __construct(
-        EavSetupFactory $eavSetupFactory
-        ) 
-    { 
-        $this->eavSetupFactory = $eavSetupFactory; 
-    } 
+    public function __construct(\Magento\Eav\Setup\EavSetupFactory $eavSetupFactory)
+    {
+        $this->eavSetupFactory = $eavSetupFactory;
+    }
 
     /**
      * {@inheritdoc}
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function install(
-        ModuleDataSetupInterface $setup,
-        ModuleContextInterface $context
-    ) {
+    public function uninstall(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
         $setup->startSetup();
-        $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+        $eavSetup = $this->eavSetupFactory->create();
+
         $connection = $setup->getConnection();
         $table = $setup->getTable('eav_attribute');
-        $data = [
-            'frontend_input' => 'datetime',
-            'frontend_model' => \Magento\Eav\Model\Entity\Attribute\Frontend\Datetime::class
-        ];
         $entity_type_id = $eavSetup->getEntityTypeId('catalog_product');
+        $data = [
+            'frontend_input' => 'date',
+            'frontend_model' => null
+        ];
+
         //update attribute special_from_date
         //backend_model: Magento\Catalog\Model\Attribute\Backend\Startdate
         $bind = [
-                    'attribute_code' => 'special_from_date',
-                    'entity_type_id' => $entity_type_id
-                ];
+            'attribute_code' => 'special_from_date',
+            'entity_type_id' => $entity_type_id
+        ];
         $select = $connection->select()->from(
             $table,
             'attribute_id'
@@ -97,4 +103,3 @@ class InstallData implements InstallDataInterface
         $setup->endSetup();
     }
 }
-
