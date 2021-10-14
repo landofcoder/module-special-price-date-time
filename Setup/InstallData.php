@@ -52,7 +52,10 @@ class InstallData implements InstallDataInterface
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
         $connection = $setup->getConnection();
         $table = $setup->getTable('eav_attribute');
-        $data = ['frontend_input' => 'datetime'];
+        $data = [
+            'frontend_input' => 'datetime',
+            'frontend_model' => \Magento\Eav\Model\Entity\Attribute\Frontend\Datetime::class
+        ];
         $entity_type_id = $eavSetup->getEntityTypeId('catalog_product');
         //update attribute special_from_date
         $bind = [
