@@ -58,6 +58,7 @@ class InstallData implements InstallDataInterface
         ];
         $entity_type_id = $eavSetup->getEntityTypeId('catalog_product');
         //update attribute special_from_date
+        //backend_model: Magento\Catalog\Model\Attribute\Backend\Startdate
         $bind = [
                     'attribute_code' => 'special_from_date',
                     'entity_type_id' => $entity_type_id
